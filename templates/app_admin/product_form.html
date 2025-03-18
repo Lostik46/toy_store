@@ -1,0 +1,135 @@
+{% extends 'app_admin/admin_base.html' %}
+
+{% block title %}{% if object %}Редактировать{% else %}Добавить{% endif %} товар{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">{% if object %}Редактировать{% else %}Добавить{% endif %} товар</h1>
+    <div class="card">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="{{ form.name.id_for_label }}" class="form-label">Название</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                        <div class="alert alert-danger">{{ form.name.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.category.id_for_label }}" class="form-label">Категория</label>
+                    {{ form.category }}
+                    {% if form.category.errors %}
+                        <div class="alert alert-danger">{{ form.category.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">Описание</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="alert alert-danger">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.short_description.id_for_label }}" class="form-label">Краткое описание</label>
+                    {{ form.short_description }}
+                    {% if form.short_description.errors %}
+                        <div class="alert alert-danger">{{ form.short_description.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.price.id_for_label }}" class="form-label">Цена</label>
+                    {{ form.price }}
+                    {% if form.price.errors %}
+                        <div class="alert alert-danger">{{ form.price.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.image.id_for_label }}" class="form-label">Изображение</label>
+                    {{ form.image }}
+                    {% if form.image.errors %}
+                        <div class="alert alert-danger">{{ form.image.errors }}</div>
+                    {% endif %}
+                    {% if object and object.image %}
+                        <div class="mt-2">
+                            <img src="{{ object.image.url }}" alt="Текущее изображение" class="img-thumbnail" style="max-width: 200px;">
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check">
+                        {{ form.is_on_sale }}
+                        <label class="form-check-label" for="{{ form.is_on_sale.id_for_label }}">
+                            Товар по акции
+                        </label>
+                    </div>
+                    {% if form.is_on_sale.errors %}
+                        <div class="alert alert-danger">{{ form.is_on_sale.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div id="saleFields" style="display: none;">
+                    <div class="mb-3">
+                        <label for="{{ form.discount.id_for_label }}" class="form-label">Размер скидки (%)</label>
+                        {{ form.discount }}
+                        {% if form.discount.errors %}
+                            <div class="alert alert-danger">{{ form.discount.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.discount_start_date.id_for_label }}" class="form-label">Дата начала акции</label>
+                        {{ form.discount_start_date }}
+                        {% if form.discount_start_date.errors %}
+                            <div class="alert alert-danger">{{ form.discount_start_date.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.discount_end_date.id_for_label }}" class="form-label">Дата окончания акции</label>
+                        {{ form.discount_end_date }}
+                        {% if form.discount_end_date.errors %}
+                            <div class="alert alert-danger">{{ form.discount_end_date.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <a href="{% url 'product_list' %}" class="btn btn-secondary">Отмена</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const onSaleCheckbox = document.getElementById('{{ form.is_on_sale.id_for_label }}');
+    const saleFields = document.getElementById('saleFields');
+    
+    // Инициализация при загрузке страницы
+    toggleSaleFields();
+    
+    // Обработчик изменения состояния чекбокса
+    onSaleCheckbox.addEventListener('change', toggleSaleFields);
+    
+    function toggleSaleFields() {
+        if (onSaleCheckbox.checked) {
+            saleFields.style.display = 'block';
+        } else {
+            saleFields.style.display = 'none';
+            // Очищаем значения полей при скрытии
+            document.getElementById('{{ form.discount.id_for_label }}').value = '';
+            document.getElementById('{{ form.discount_start_date.id_for_label }}').value = '';
+            document.getElementById('{{ form.discount_end_date.id_for_label }}').value = '';
+        }
+    }
+});
+</script>
+{% endblock %} 

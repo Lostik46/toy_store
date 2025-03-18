@@ -1,0 +1,71 @@
+{% extends 'app_admin/admin_base.html' %}
+
+{% block title %}Главная - Админ-панель{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Панель управления</h1>
+    
+    <div class="row">
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Категории</h5>
+                    <p class="card-text">Управление категориями товаров</p>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'category_list' %}" class="btn btn-primary">Перейти к категориям</a>
+                        <a href="{% url 'category_add' %}" class="btn btn-success">
+                            <i class="bi bi-plus-lg"></i> Добавить
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Товары</h5>
+                    <p class="card-text">Управление товарами магазина</p>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'product_list' %}" class="btn btn-primary">Перейти к товарам</a>
+                        <a href="{% url 'product_add' %}" class="btn btn-success">
+                            <i class="bi bi-plus-lg"></i> Добавить
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Статистика</h5>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="border rounded p-3 text-center">
+                                <h3>{{ categories_count }}</h3>
+                                <p class="mb-0">Категорий</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="border rounded p-3 text-center">
+                                <h3>{{ products_count }}</h3>
+                                <p class="mb-0">Товаров</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="border rounded p-3 text-center">
+                                <h3>{{ active_sales }}</h3>
+                                <p class="mb-0">Активных акций</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

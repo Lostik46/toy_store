@@ -1,0 +1,52 @@
+{% extends 'app_client/base.html' %}
+
+{% block title %}Профиль - Магазин игрушек{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Профиль пользователя</h2>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-4 text-center">
+                        {% if client.profile_image %}
+                            <img src="{{ client.profile_image.url }}" alt="Фото профиля" 
+                                 class="img-fluid rounded-circle mb-3" style="max-width: 200px;">
+                        {% else %}
+                            <img src="/media/profile_images/default.jpg" alt="Фото профиля по умолчанию" 
+                                 class="img-fluid rounded-circle mb-3" style="max-width: 200px;">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <h3>{{ client.get_name }}</h3>
+                        <p class="text-muted">{{ client.user.username }}</p>
+                    </div>
+                </div>
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="alert alert-danger mt-2">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
