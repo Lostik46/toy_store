@@ -8,9 +8,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-@w&(e*pk1e*-htr!bh0=uo5%7(&p7dz&+88%vw04t+i78i19)p'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['toy-store-ffej.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
