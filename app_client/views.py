@@ -72,9 +72,24 @@ def profile_view(request):
     })
 
 def home(request):
-    sale_products = Product.objects.filter(discount__gt=0).order_by('-discount')[:8]
+    # Получаем товары со скидкой
+    sale_products = Product.objects.filter(
+        is_active=True,
+        is_on_sale=True,
+        discount__isnull=False,
+        discount_start_date__lte=timezone.now(),
+        discount_end_date__gte=timezone.now()
+    )[:6]
+
+    # Получаем новые товары (за последние 7 дней)
+    new_products = Product.objects.filter(
+        is_active=True,
+        created_at__gte=timezone.now() - timezone.timedelta(days=7)
+    )[:6]
+
     return render(request, 'app_client/home.html', {
         'sale_products': sale_products,
+        'new_products': new_products
     })
 
 def catalog(request):
