@@ -10,7 +10,7 @@ SECRET_KEY = 'django-insecure-@w&(e*pk1e*-htr!bh0=uo5%7(&p7dz&+88%vw04t+i78i19)p
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['toy-store-ffej.onrender.com']
+ALLOWED_HOSTS = ['https://toy-store-ffej.onrender.com/']
 
 
 INSTALLED_APPS = [
